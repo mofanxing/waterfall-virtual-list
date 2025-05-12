@@ -1,0 +1,12 @@
+{
+  "name": "@virtual/shared",
+  "version": "0.0.1",
+  "module": "dist/shared.esm-bundler.js",
+  "buildOptions": {
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  },
+  "packageManager": "pnpm@10.7.0"
+}

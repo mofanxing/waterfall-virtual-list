@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .waterfall-item {
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        .fade-in {
+            animation: .4s  imgAnime ease;
+        }
+        @keyframes imgAnime {
+            0% {
+                opacity: 0;
+                transform: translateY(200px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="waterfall-container">
+    </div>
+    <script type="module">
+        import { SuperVirtual } from './super-virtual-list.js'
+        import { mockData } from './mock.js'
+        let data = mockData.map(item => {
+            return {
+                original_url: item.original_url,
+                tags: item.tags,
+            }
+        })
+
+        window.virtual = new SuperVirtual({
+            el: document.querySelector('#waterfall-container'),
+            viewportHeight: 800,
+            data,
+            column: 4,
+            gap: 20,
+            renderItem: (item) => {
+                const div = document.createElement('div');
+                div.className = 'waterfall-item';
+                div.innerHTML = `
+                    <div>
+                        <img src="${item.original_url}" style="width: 100%;">
+                        <p style="padding: 4px;">#${item.tags}</p>
+                    </div
+                `;
+                return div;
+            }
+        });
+        console.log(virtual)
+    </script>
+</body>
+
+</html>

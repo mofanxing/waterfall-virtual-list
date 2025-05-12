@@ -1,0 +1,19 @@
+{
+  "name": "@virtual/super-virtual-list",
+  "version": "0.0.1",
+  "module": "dist/super-virtual-list.esm-bundler.js",
+  "unpkg": "dist/super-virtual-list.global.js",
+  "buildOptions": {
+    "name": "SuperVirtualList",
+    "formats": [
+      "esm-bundler",
+      "esm-browser",
+      "cjs",
+      "global"
+    ]
+  },
+  "packageManager": "pnpm@10.7.0",
+  "dependencies": {
+    "@virtual/shared": "workspace:^"
+  }
+}
