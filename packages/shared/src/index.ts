@@ -93,3 +93,51 @@ export function debounce<T extends (...args: any[]) => any>(
     }, delay);
   };
 }
+
+
+export function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+  options: { leading?: boolean; trailing?: boolean } = {}
+): T {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  let previous = 0;
+  let context: any;
+  let args: any;
+
+  const later = () => {
+    previous = options.leading === false ? 0 : Date.now();
+    timeout = null;
+    func.apply(context, args);
+    context = args = null;
+  };
+
+  const throttled = function (this: any, ...rest: any[]) {
+    const now = Date.now();
+    if (!previous && options.leading === false) previous = now;
+
+    const remaining = wait - (now - previous);
+    context = this;
+    args = rest;
+
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      func.apply(context, args);
+      context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+  };
+
+  throttled.cancel = () => {
+    clearTimeout(timeout!);
+    timeout = null;
+    previous = 0;
+  };
+
+  return throttled as unknown as T;
+}

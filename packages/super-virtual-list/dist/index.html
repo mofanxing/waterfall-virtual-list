@@ -10,13 +10,16 @@
             padding: 0;
             margin: 0;
         }
+
         .waterfall-item {
             overflow-wrap: break-word;
             word-break: normal;
         }
+
         .fade-in {
-            animation: .4s  imgAnime ease;
+            animation: .4s imgAnime ease;
         }
+
         @keyframes imgAnime {
             0% {
                 opacity: 0;
@@ -37,17 +40,23 @@
     <script type="module">
         import { SuperVirtual } from './super-virtual-list.js'
         import { mockData } from './mock.js'
-        let data = mockData.map(item => {
-            return {
-                original_url: item.original_url,
-                tags: item.tags,
+        let limit = 18;
+        let page = 0;
+        const getData = async () => {
+            let result = await request(`https://www.vilipix.com/api/v1/picture/public?limit=${limit}&sort=hot&offset=${limit * page
+                }`)
+            if (result.code == 0) {
+                page++;
             }
-        })
+            return result.data.rows;
+        }
+
+
 
         window.virtual = new SuperVirtual({
             el: document.querySelector('#waterfall-container'),
             viewportHeight: 800,
-            data,
+            data: getData,
             column: 4,
             gap: 20,
             renderItem: (item) => {
@@ -60,9 +69,37 @@
                     </div
                 `;
                 return div;
-            }
+            },
+            scrollToBottom: getData
         });
-        console.log(virtual)
+
+
+
+
+        function request(url, options = {}) {
+            return new Promise((resolve, reject) => {
+                fetch(url, options)
+                    .then(async (response) => {
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            reject(new Error(`HTTP error! status: ${response.status}, message: ${errorText}`));
+                        } else {
+                            // 尝试解析为 JSON，失败则返回原始文本
+                            try {
+                                const data = await response.json();
+                                resolve(data);
+                            } catch (e) {
+                                const text = await response.text();
+                                resolve(text);
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        reject(new Error(`Network error: ${error.message}`));
+                    });
+            });
+        }
+
     </script>
 </body>
 

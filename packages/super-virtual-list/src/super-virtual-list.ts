@@ -1,5 +1,5 @@
-import { SuperVirtualListConfig } from "./types";
-import { _getVisibleRange, observeVisibility, debounce } from "@virtual/shared";
+import { SuperVirtualListConfig, DataItem } from "./types";
+import { _getVisibleRange, observeVisibility, debounce, throttle } from "@virtual/shared";
 export function SuperVirtual(config: SuperVirtualListConfig) {
   return new SuperVirtualList(config);
 }
@@ -8,6 +8,7 @@ class SuperVirtualList {
   el: HTMLElement;
   content: HTMLElement | null;
   config: SuperVirtualListConfig;
+  data: DataItem[];
   colWidth: number;
   colHeights: number[];
   totalHeight: number;
@@ -20,6 +21,8 @@ class SuperVirtualList {
   MAX_DOM_POOL_SIZE: number;
   resizeObserver: ResizeObserver;
   _debouncedRecalculate: () => void;
+  isUpdate: boolean;
+  _onScrollThrottled: () => void;
 
   constructor(config: SuperVirtualListConfig) {
     this.config = config;
@@ -38,13 +41,22 @@ class SuperVirtualList {
     this._pendingObservers = [];
     this._observerTimer = null;
     this._ticking = false;
+    this.isUpdate = false;
+    this._initData(config);
+  }
+
+  //初始化data
+  async _initData(config: SuperVirtualListConfig) {
+    if (typeof config.data === "function") {
+      this.data = await config.data();
+    } else {
+      this.data = config.data;
+    }
+    this._onScrollThrottled = throttle(this._onScroll.bind(this), 100);
 
     this._init_el();
-    this._debouncedRecalculate = debounce(
-      this._init.bind(this),
-      200
-    );
-    this.el.addEventListener("scroll", () => this._onScrollThrottled());
+    this._debouncedRecalculate = debounce(this._init.bind(this), 200);
+    this.el.addEventListener("scroll", this._onScrollThrottled);
     this.resizeObserver = new ResizeObserver(() =>
       this._debouncedRecalculate()
     );
@@ -61,15 +73,15 @@ class SuperVirtualList {
   async _init() {
     this.colHeights = Array(this.config.column).fill(0);
     this.totalHeight = 0;
-
-    let { data, renderItem, gap, column } = this.config;
+    let data = this.data;
+    let { renderItem, gap, column } = this.config;
     let width = Math.floor(
       (this.el.clientWidth - (column - 1) * gap) / this.config.column
     );
     this.colWidth = width;
     for (let i = 0; i < data.length; i++) {
       const el = renderItem(data[i]);
-      el.style.width = this.colWidth + "px";
+      el.style.width = width + "px";
       const measuredHeight = await this._measure(el);
       const minCol = this.colHeights.indexOf(Math.min(...this.colHeights));
       const x = Math.floor(minCol * (width + gap));
@@ -83,16 +95,42 @@ class SuperVirtualList {
       // 4. 立即更新当前可见的DOM元素
       const activeEl = this.activeMap.get(i);
       if (activeEl) {
-          activeEl.style.width = `${this.colWidth}px`;
-          activeEl.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        activeEl.style.width = `${this.colWidth}px`;
+        activeEl.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       }
     }
-    this.config.data = data;
+    this.data = data;
     this.totalHeight = Math.max(...this.colHeights);
     this.content.style.height = this.totalHeight + "px";
-    console.log(this.config.data)
 
-    this._onScroll(); // 初始渲染
+    requestAnimationFrame(() => {
+      this._onScroll();
+    });
+  }
+
+  async updateData(data: any[]) {
+    let { renderItem, gap } = this.config;
+    let width = this.colWidth;
+    for (let i = 0; i < data.length; i++) {
+      const el = renderItem(data[i]);
+      el.style.width = width + "px";
+      const measuredHeight = await this._measure(el);
+      const minCol = this.colHeights.indexOf(Math.min(...this.colHeights));
+      const x = Math.floor(minCol * (width + gap));
+      const y = Math.floor(this.colHeights[minCol]);
+      data[i].height = measuredHeight;
+      data[i].x = x;
+      data[i].y = y;
+      data[i].width = width;
+      this.colHeights[minCol] += measuredHeight + gap;
+    }
+    this.data.push(...data);
+    this.totalHeight = Math.max(...this.colHeights);
+    this.content.style.height = this.totalHeight + "px";
+
+    requestAnimationFrame(() => {
+      this._onScroll();
+    });
   }
 
   async _measure(el) {
@@ -118,6 +156,11 @@ class SuperVirtualList {
     return height;
   }
 
+  _setElementStyle(el: HTMLElement, { x, y, width }: any) {
+    el.style.width = width + "px";
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }
+
   _onScroll() {
     const scrollTop = this.el.scrollTop;
     const buffer = this.config.buffer || 300;
@@ -125,10 +168,9 @@ class SuperVirtualList {
       scrollTop,
       this.viewportHeight,
       buffer,
-      this.config.data,
+      this.data,
       this.config.column
     );
-
     // 移除不在范围内的元素
     for (let [i, el] of this.activeMap.entries()) {
       if (i < start || i > end) {
@@ -145,14 +187,13 @@ class SuperVirtualList {
       if (!this.activeMap.has(i)) {
         let el = this.domPool.get(i);
         if (!el) {
-          el = this.config.renderItem(this.config.data[i]);
+          el = this.config.renderItem(this.data[i]);
           this.domPool.set(i, el);
         }
-        const pos = this.config.data[i];
+        const pos = this.data[i];
 
         el.style.position = "absolute";
-        el.style.width = pos.width + "px";
-        el.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+        this._setElementStyle(el, { width: pos.width, x: pos.x, y: pos.y });
         this.activeMap.set(i, el);
         fragment.appendChild(el);
         this._pendingObservers.push(el);
@@ -177,17 +218,26 @@ class SuperVirtualList {
         }
       }
     }
+
+    // 检查是否滚动到底部
+    this.isScrollBottom();
   }
 
-  // 节流滚动事件
-  _onScrollThrottled() {
-    if (!this._ticking) {
-      this._ticking = true;
-      requestAnimationFrame(() => {
-        this._onScroll();
-        this._ticking = false;
-      });
+  //判断是否滚动到底部
+  async isScrollBottom() {
+    const el = this.el;
+    const buffer = 50;
+    const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - buffer;
+    if (isBottom && !this.isUpdate) {
+      this.isUpdate = true;
+      try {
+        let data = await this.config.scrollToBottom();
+        if (data.length) {
+          await this.updateData(data);
+        }
+      } finally {
+        this.isUpdate = false;
+      }
     }
   }
-
 }
