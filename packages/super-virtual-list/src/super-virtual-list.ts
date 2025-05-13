@@ -204,7 +204,7 @@ class SuperVirtualList {
     // 延迟处理观察动画
     cancelAnimationFrame(this._observerTimer);
     this._observerTimer = requestAnimationFrame(() => {
-      this._pendingObservers.forEach((el) => observeVisibility.call(this, el));
+      this._pendingObservers.forEach((el) => observeVisibility.call(this, el, this.config.animeClass));
       this._pendingObservers = [];
     });
 
@@ -228,7 +228,7 @@ class SuperVirtualList {
     const el = this.el;
     const buffer = 50;
     const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - buffer;
-    if (isBottom && !this.isUpdate) {
+    if (isBottom && !this.isUpdate && this.config.scrollToBottom) {
       this.isUpdate = true;
       try {
         let data = await this.config.scrollToBottom();

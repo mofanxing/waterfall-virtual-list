@@ -3,6 +3,7 @@ export interface SuperVirtualListConfig {
   column: number;
   gap: number;
   viewportHeight: number;
+  animeClass?: string;
   renderItem: (item: any) => HTMLElement;
   updateData: (data: any[]) => void;
   scrollToBottom: () => any[];

@@ -32,21 +32,23 @@ function _binarySearch(targetY, data) {
   return result;
 }
 
-export function observeVisibility(el) {
+export function observeVisibility(
+  el: HTMLElement,
+  animeClass: string
+) {
   const observer = new IntersectionObserver(
     ([entry], obs) => {
       if (entry.isIntersecting) {
         //给第一个子元素添加动画
         if (el.firstElementChild) {
-          el.firstElementChild.classList.add("fade-in");
+          el.firstElementChild.classList.add(animeClass);
         }
         obs.unobserve(el);
-      }else{
+      }else {
         if (el.firstElementChild) {
-          el.firstElementChild.classList.remove("fade-in");
+          el.firstElementChild.classList.remove(animeClass);
         }
       }
-      
     },
     {
       root: this.el, // 设置为滚动容器
@@ -93,7 +95,6 @@ export function debounce<T extends (...args: any[]) => any>(
     }, delay);
   };
 }
-
 
 export function throttle<T extends (...args: any[]) => void>(
   func: T,
