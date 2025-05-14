@@ -3,7 +3,7 @@ name: Sync to Gitee
 on:
   push:
     branches:
-      - main   # 你实际使用的主分支（如 master）
+      - master   # 你实际使用的主分支（如 master）
 
 jobs:
   sync:
