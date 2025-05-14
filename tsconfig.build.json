@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "outDir": "temp/packages",
+      "declaration": true,
+      "emitDeclarationOnly": true,
+      "stripInternal": true,
+      "composite": false
+    },
+    "include": [
+        "packages/shared/src",
+        "packages/super-virtual-list/src"
+    ]
+  }
+  

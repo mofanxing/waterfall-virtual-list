@@ -1,4 +1,4 @@
-export interface SuperVirtualListConfig {
+export interface WaterfallVirtualListConfig {
   el: HTMLElement | string;
   column: number;
   gap: number;

@@ -6,15 +6,20 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node scripts/dev.js super-virtual-list -f esm"
+    "dev": "node scripts/dev.js super-virtual-list -f esm",
+    "build-dts": "tsc -p tsconfig.build.json --noCheck && rollup -c rollup.dts.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.7.0",
   "devDependencies": {
+    "@babel/parser": "^7.27.2",
     "esbuild": "^0.25.4",
+    "magic-string": "^0.30.17",
     "minimist": "^1.2.8",
+    "rollup": "^4.40.2",
+    "rollup-plugin-dts": "^6.2.1",
     "typescript": "^5.8.3"
   }
 }

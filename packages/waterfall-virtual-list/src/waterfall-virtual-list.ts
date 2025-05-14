@@ -1,13 +1,13 @@
-import { SuperVirtualListConfig, DataItem } from "./types";
+import { WaterfallVirtualListConfig, DataItem } from "./types";
 import { _getVisibleRange, observeVisibility, debounce, throttle } from "@virtual/shared";
-export function SuperVirtual(config: SuperVirtualListConfig) {
-  return new SuperVirtualList(config);
+export function WaterfallVirtual(config: WaterfallVirtualListConfig) {
+  return new WaterfallVirtualList(config);
 }
 
-class SuperVirtualList {
+class WaterfallVirtualList {
   el: HTMLElement;
   content: HTMLElement | null;
-  config: SuperVirtualListConfig;
+  config: WaterfallVirtualListConfig;
   data: DataItem[];
   colWidth: number;
   colHeights: number[];
@@ -24,7 +24,7 @@ class SuperVirtualList {
   isUpdate: boolean;
   _onScrollThrottled: () => void;
 
-  constructor(config: SuperVirtualListConfig) {
+  constructor(config: WaterfallVirtualListConfig) {
     this.config = config;
     this.el =
       typeof config.el === "string"
@@ -46,7 +46,7 @@ class SuperVirtualList {
   }
 
   //初始化data
-  async _initData(config: SuperVirtualListConfig) {
+  async _initData(config: WaterfallVirtualListConfig) {
     if (typeof config.data === "function") {
       this.data = await config.data();
     } else {

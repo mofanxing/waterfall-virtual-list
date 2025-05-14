@@ -38,8 +38,7 @@
     <div id="waterfall-container">
     </div>
     <script type="module">
-        import { SuperVirtual } from './super-virtual-list.js'
-        import { mockData } from './mock.js'
+        import { WaterfallVirtual } from './waterfall-virtual-list.js'
         let limit = 18;
         let page = 0;
         const getData = async () => {
@@ -53,7 +52,7 @@
 
 
 
-        window.virtual = new SuperVirtual({
+        window.virtual = new WaterfallVirtual({
             el: document.querySelector('#waterfall-container'),
             viewportHeight: 800,
             data: getData,
