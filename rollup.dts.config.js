@@ -46,7 +46,6 @@ function patchTypes(pkg) {
     return {
         name: 'patch-types',
         renderChunk(code, chunk) {
-            console.log(chunk)
             const s = new MagicString(code)
             const ast = parse(code, {
                 plugins: ['typescript'],
