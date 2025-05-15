@@ -6,6 +6,7 @@
     "@redlives/waterfall-virtual-list": "1.0.0-beta.2"
   },
   "changesets": [
-    "easy-fans-see"
+    "easy-fans-see",
+    "mean-results-think"
   ]
 }

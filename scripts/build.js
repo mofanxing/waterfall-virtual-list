@@ -14,7 +14,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url)
 //打包哪个项目
-const target = args._[0] || 'waterfall-virtual-list';
+const file_name = [
+    'shared',
+    'waterfall-virtual-list'
+]
+const target = args._[0] || file_name[0];
 //打包模式
 
 //入口文件

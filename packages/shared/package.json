@@ -1,12 +1,18 @@
 {
   "name": "@redlives/shared",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.0",
   "module": "dist/shared.esm-bundler.js",
   "buildOptions": {
     "formats": [
       "esm-bundler",
       "cjs"
     ]
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/shared.esm-bundler.js",
+      "types": "./dist/shared.d.ts"
+    }
   },
   "publishConfig": {
     "access": "public"
