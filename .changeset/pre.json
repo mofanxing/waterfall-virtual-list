@@ -2,11 +2,8 @@
   "mode": "pre",
   "tag": "beta",
   "initialVersions": {
-    "@redlives/shared": "0.0.0",
-    "@redlives/waterfall-virtual-list": "0.0.0"
+    "@redlives/shared": "0.0.1",
+    "@redlives/waterfall-virtual-list": "1.0.0-beta.2"
   },
-  "changesets": [
-    "brown-cats-melt",
-    "honest-nails-hang"
-  ]
+  "changesets": []
 }
