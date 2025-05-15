@@ -9,7 +9,7 @@
     },
     "include": [
         "packages/shared/src",
-        "packages/super-virtual-list/src"
+        "packages/waterfall-virtual-list/src"
     ]
   }
   

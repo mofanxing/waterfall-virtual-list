@@ -1,13 +1,14 @@
 {
-  "name": "super-virtual-list",
+  "name": "waterfall-virtual-list",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node scripts/dev.js super-virtual-list -f esm",
-    "build-dts": "tsc -p tsconfig.build.json --noCheck && rollup -c rollup.dts.config.js"
+    "dev": "node scripts/dev.js waterfall-virtual-list -f iife",
+    "build-dts": "tsc -p tsconfig.build.json --noCheck && rollup -c rollup.dts.config.js",
+    "build": "rollup -c scripts/build.js"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +16,15 @@
   "packageManager": "pnpm@10.7.0",
   "devDependencies": {
     "@babel/parser": "^7.27.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
     "esbuild": "^0.25.4",
     "magic-string": "^0.30.17",
     "minimist": "^1.2.8",
     "rollup": "^4.40.2",
     "rollup-plugin-dts": "^6.2.1",
+    "terser": "^5.39.1",
+    "tslib": "^2.8.1",
     "typescript": "^5.8.3"
   }
 }

@@ -1,1 +1,2 @@
-export * from './waterfall-virtual-list'
+import { WaterfallVirtual } from './waterfall-virtual-list';
+export default WaterfallVirtual;

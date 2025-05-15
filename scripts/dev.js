@@ -12,13 +12,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url)
 //打包哪个项目
-const target = args._[0] || 'super-virtual-list';
+const target = args._[0] || 'waterfall-virtual-list';
 //打包模式
 const format = args.f || 'iife';
 
 //入口文件
 const entry = resolve(__dirname, `../packages/${target}/src/index.ts`);
 const pkg = require(`../packages/${target}/package.json`)
+
 
 //根据需要打包
 esbuild.context({
@@ -27,7 +28,6 @@ esbuild.context({
     bundle: true,
     platform: 'browser',//打包给浏览器使用
     sourcemap: true,
-    minify: true,
     format,
     globalName: pkg.buildOptions?.name
 }).then((ctx) => {

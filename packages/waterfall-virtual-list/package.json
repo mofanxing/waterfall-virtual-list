@@ -1,16 +1,22 @@
 {
   "name": "@virtual/super-virtual-list",
-  "version": "0.0.1",
-  "module": "dist/super-virtual-list.esm-bundler.js",
-  "unpkg": "dist/super-virtual-list.global.js",
+  "version": "1.0.0",
+  "module": "dist/waterfall-virtual-list.esm-bundler.js",
+  "unpkg": "dist/waterfall-virtual-list.global.js",
   "buildOptions": {
-    "name": "SuperVirtualList",
+    "name": "WaterfallVirtual",
     "formats": [
       "esm-bundler",
       "esm-browser",
       "cjs",
       "global"
     ]
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/waterfall-virtual-list.esm-bundler.js",
+      "types": "./dist/waterfall-virtual-list.d.ts"
+    }
   },
   "packageManager": "pnpm@10.7.0",
   "dependencies": {

@@ -37,8 +37,11 @@
 <body>
     <div id="waterfall-container">
     </div>
+    <!-- <script src="./waterfall-virtual-list.global.js"></script> -->
     <script type="module">
-        import { WaterfallVirtual } from './waterfall-virtual-list.js'
+        
+        import WaterfallVirtual from './waterfall-virtual-list.esm-bundler.js'
+        console.log(WaterfallVirtual)
         let limit = 18;
         let page = 0;
         const getData = async () => {
