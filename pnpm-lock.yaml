@@ -53,11 +53,7 @@ importers:
         specifier: workspace:^
         version: link:../shared
 
-  packages/waterfall-virtual-list:
-    dependencies:
-      '@redlives/shared':
-        specifier: workspace:^
-        version: link:../shared
+  packages/waterfall-virtual-list: {}
 
 packages:
 
