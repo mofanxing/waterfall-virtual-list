@@ -8,14 +8,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node scripts/dev.js waterfall-virtual-list -f iife",
     "build-dts": "tsc -p tsconfig.build.json --noCheck && rollup -c rollup.dts.config.js",
-    "build": "rollup -c scripts/build.js"
+    "build": "rollup -c scripts/build.js",
+    "preinstall": "npx only-allow pnpm"
   },
+  "private": true,
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.7.0",
   "devDependencies": {
     "@babel/parser": "^7.27.2",
+    "@changesets/cli": "^2.29.4",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "esbuild": "^0.25.4",

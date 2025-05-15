@@ -1,5 +1,5 @@
 {
-  "name": "@virtual/shared",
+  "name": "@redlives/shared",
   "version": "0.0.1",
   "module": "dist/shared.esm-bundler.js",
   "buildOptions": {
@@ -7,6 +7,9 @@
       "esm-bundler",
       "cjs"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "packageManager": "pnpm@10.7.0"
 }

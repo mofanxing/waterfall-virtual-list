@@ -1,0 +1,9 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@redlives/shared": "0.0.1",
+    "@redlives/waterfall-virtual-list": "0.0.1"
+  },
+  "changesets": []
+}

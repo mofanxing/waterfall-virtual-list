@@ -1,5 +1,5 @@
 import { WaterfallVirtualListConfig, DataItem } from "./types";
-import { _getVisibleRange, observeVisibility, debounce, throttle } from "@virtual/shared";
+import { _getVisibleRange, observeVisibility, debounce, throttle } from "@redlives/shared";
 export function WaterfallVirtual(config: WaterfallVirtualListConfig) {
   return new WaterfallVirtualList(config);
 }

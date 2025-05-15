@@ -1,6 +1,6 @@
 {
-  "name": "@virtual/waterfall-virtual-list",
-  "version": "1.0.0",
+  "name": "@redlives/waterfall-virtual-list",
+  "version": "0.0.1",
   "module": "dist/waterfall-virtual-list.esm-bundler.js",
   "unpkg": "dist/waterfall-virtual-list.global.js",
   "buildOptions": {
@@ -18,8 +18,11 @@
       "types": "./dist/waterfall-virtual-list.d.ts"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "pnpm@10.7.0",
   "dependencies": {
-    "@virtual/shared": "workspace:^"
+    "@redlives/shared": "workspace:^"
   }
 }
