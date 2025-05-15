@@ -1,6 +1,6 @@
 {
   "name": "@redlives/waterfall-virtual-list",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "module": "dist/waterfall-virtual-list.esm-bundler.js",
   "unpkg": "dist/waterfall-virtual-list.global.js",
   "buildOptions": {
