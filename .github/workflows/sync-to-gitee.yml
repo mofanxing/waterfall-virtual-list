@@ -19,7 +19,8 @@ jobs:
           git config --global user.email "actions@github.com"
           
           # 设置 Gitee 仓库地址（带上 token）
-          git remote add gitee https://${{ secrets.GITEE_TOKEN }}@gitee.com/${{ secrets.GITEE_REPO }}.git
+          #git remote add gitee https://${{ secrets.GITEE_TOKEN }}@gitee.com/${{ secrets.GITEE_REPO }}.git
+          git remote add gitee https://3d03bff48729033b48b604a82f3ad2c8@gitee.com/redlaves-home/waterfall-virtual-list.git
           
           # 推送代码到 Gitee
           git push --mirror gitee
