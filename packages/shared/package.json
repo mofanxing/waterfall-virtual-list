@@ -1,6 +1,6 @@
 {
   "name": "@redlives/shared",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "module": "dist/shared.esm-bundler.js",
   "buildOptions": {
     "formats": [
