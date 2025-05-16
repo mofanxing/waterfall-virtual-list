@@ -80,8 +80,6 @@ const instance = WaterfallVirtual({
 </script>
 ```
 
-更新后的配置表如下，已将 `data` 的类型修改为 `Array | Promise<DataItem[]>`：
-
 ---
 
 ### Configuration Options
@@ -98,8 +96,3 @@ const instance = WaterfallVirtual({
 | `animeClass`     | `string`                       | Optional: class to apply visibility animation                   |
 | `buffer`         | `number`                       | Optional: additional buffer area before and after visible range |
 | `maxDomPoolSize` | `number`                       | Optional: maximum number of elements in DOM reuse pool          |
-
-
-
-
-

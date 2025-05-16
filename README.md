@@ -80,8 +80,6 @@ const instance = WaterfallVirtual({
 </script>
 ```
 
-更新后的配置表如下，已将 `data` 的类型修改为 `Array | Promise<DataItem[]>`：
-
 ---
 
 ### Configuration Options
