@@ -82,17 +82,16 @@ const instance = WaterfallVirtual({
 
 ---
 
-### Configuration Options
+| Option           | Type                                 | Description                                                     |
+| ---------------- | ------------------------------------ | --------------------------------------------------------------- |
+| `el`             | `string \| HTMLElement`              | Container element                                               |
+| `data`           | `Array \| () => Promise<DataItem[]>` | Initial dataset or async fetch function                         |
+| `column`         | `number`                             | Number of columns                                               |
+| `gap`            | `number`                             | Gap between items                                               |
+| `viewportHeight` | `number`                             | Height of scrollable container                                  |
+| `renderItem`     | `(item) => HTMLElement`              | Render function for each item                                   |
+| `scrollToBottom` | `() => Promise<DataItem[]>`          | Optional: fetch more data on scroll bottom                      |
+| `animeClass`     | `string`                             | Optional: class to apply visibility animation                   |
+| `buffer`         | `number`                             | Optional: additional buffer area before and after visible range |
+| `maxDomPoolSize` | `number`                             | Optional: maximum number of elements in DOM reuse pool          |
 
-| Option           | Type                           | Description                                                     |
-| ---------------- | ------------------------------ | --------------------------------------------------------------- |
-| `el`             | `string \| HTMLElement`        | Container element                                               |
-| `data`           | `Array \| Promise<DataItem[]>` | Initial dataset or async fetch function                         |
-| `column`         | `number`                       | Number of columns                                               |
-| `gap`            | `number`                       | Gap between items                                               |
-| `viewportHeight` | `number`                       | Height of scrollable container                                  |
-| `renderItem`     | `(item) => HTMLElement`        | Render function for each item                                   |
-| `scrollToBottom` | `() => Promise<DataItem[]>`    | Optional: fetch more data on scroll bottom                      |
-| `animeClass`     | `string`                       | Optional: class to apply visibility animation                   |
-| `buffer`         | `number`                       | Optional: additional buffer area before and after visible range |
-| `maxDomPoolSize` | `number`                       | Optional: maximum number of elements in DOM reuse pool          |

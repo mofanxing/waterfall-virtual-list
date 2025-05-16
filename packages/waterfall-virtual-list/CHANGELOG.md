@@ -1,5 +1,11 @@
 # @redlives/waterfall-virtual-list
 
+## 1.0.0-beta.8
+
+### Major Changes
+
+- beta
+
 ## 1.0.0-beta.7
 
 ### Major Changes
